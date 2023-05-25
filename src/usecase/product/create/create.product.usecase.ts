@@ -5,6 +5,7 @@ import {
 } from "./create.product.dto";
 import ProductFactory from "../../../domain/product/factory/product.factory";
 import Product from "../../../domain/product/entity/product";
+import { v4 as uuid } from "uuid";
 
 export default class CreateProductUseCase {
   private productRepository: ProductRepositoryInterface;
@@ -17,7 +18,7 @@ export default class CreateProductUseCase {
     input: InputCreateProductDto
   ): Promise<OutputCreateProductDto> {
 
-    const product = new Product('id', input.name, input.price);
+    const product = new Product(uuid(), input.name, input.price);
 
     await this.productRepository.create(product)
     product.validate()
